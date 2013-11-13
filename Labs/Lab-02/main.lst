@@ -1,0 +1,700 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; main.s
+    2 00000000         ; Runs on any Cortex M processor
+    3 00000000         ;
+    4 00000000         ; This program drives a ten segment LED bar in
+    5 00000000         ; a binary counter fashion.
+    6 00000000         ;
+    7 00000000         ; Included are three buttons, two onboard and
+    8 00000000         ; one external.  These buttons control the start
+    9 00000000         ; stop, and restart functions.
+   10 00000000         ;
+   11 00000000         ; The bar graph is attached to ports B0:7 and A2:3 and i
+                       s active low.
+   12 00000000         ;
+   13 00000000         ; The button is connected between ground and A7.  There 
+                       is no pull resistor.
+   14 00000000         ; The dev board switches are connnected to ports F0 and 
+                       F4
+   15 00000000         
+   16 00000000         
+   17 00000000                 THUMB
+   18 00000000                 AREA             DATA, ALIGN=2
+   19 00000000                 ALIGN
+   20 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   21 00000000                 EXPORT           Start
+   22 00000000         
+   23 00000000         ; offsets
+   24 00000000 000003FC 
+                       GPIODATA
+                               EQU              0x3FC
+   25 00000000 00000400 
+                       GPIODIR EQU              0x400
+   26 00000000 00000404 
+                       GPIOIS  EQU              0x404
+   27 00000000 00000408 
+                       GPIOIBE EQU              0x408
+   28 00000000 0000040C 
+                       GPIOIEV EQU              0x40C
+   29 00000000 00000410 
+                       GPIOIM  EQU              0x410
+   30 00000000 00000414 
+                       GPIORIS EQU              0x414
+   31 00000000 00000418 
+                       GPIOMIS EQU              0x418
+   32 00000000 00000500 
+                       GPIODR2R
+                               EQU              0x500
+   33 00000000 00000504 
+                       GPIODR4R
+                               EQU              0x504
+   34 00000000 00000508 
+                       GPIODR8R
+                               EQU              0x508
+   35 00000000 0000050C 
+                       GPIOODR EQU              0x50C
+   36 00000000 00000510 
+                       GPIOPUR EQU              0x510
+   37 00000000 00000514 
+                       GPIOPDR EQU              0x514
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   38 00000000 0000051C 
+                       GPIODEN EQU              0x51C
+   39 00000000 00000520 
+                       GPIOLOCK
+                               EQU              0x520
+   40 00000000 00000524 
+                       GPIOCR  EQU              0x524
+   41 00000000         
+   42 00000000         ; base addrs
+   43 00000000 40004000 
+                       GPIOA   DCD              0x40004000
+   44 00000004 40005000 
+                       GPIOB   DCD              0x40005000
+   45 00000008 40006000 
+                       GPIOC   DCD              0x40006000
+   46 0000000C 40007000 
+                       GPIOD   DCD              0x40007000
+   47 00000010 40024000 
+                       GPIOE   DCD              0x40024000
+   48 00000014 40025000 
+                       GPIOF   DCD              0x40025000
+   49 00000018         
+   50 00000018         ;arbitrary init values
+   51 00000018 00000023 
+                       CLKSET  DCD              0x23        ; init ports A, B, 
+                                                            and F
+   52 0000001C 0000000C 
+                       PORTAOUTSET
+                               DCD              0x0C        ; 2:3 are output
+   53 00000020 00000080 
+                       PORTAINSET
+                               DCD              0x80        ; 7 is input
+   54 00000024 000000FF 
+                       PORTBOUTSET
+                               DCD              0xFF        ; 0:7 are output
+   55 00000028 00000000 
+                       PORTBINSET
+                               DCD              0x00        ; no input on B
+   56 0000002C 00000002 
+                       PORTFOUTSET
+                               DCD              0x02        ; 1 is output
+   57 00000030 00000011 
+                       PORTFINSET
+                               DCD              0x11        ;0, 4 are input
+   58 00000034         
+   59 00000034 400FE108 
+                       RCGCGPIO
+                               DCD              0x400FE108
+   60 00000038         
+   61 00000038 00000002 
+                       SETUP   DCD              0x02        ; pin 1 init
+   62 0000003C         
+   63 0000003C         Start
+   64 0000003C         ; init gpios: see pg 651 of the TI datasheet.
+   65 0000003C         ; set up RCGCGPIO
+   66 0000003C F85F 000C       LDR              r0, RCGCGPIO
+   67 00000040 F85F 102C       LDR              r1, CLKSET
+   68 00000044 6001            STR              r1, [r0]
+   69 00000046         
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   70 00000046         ; init GPIOA
+   71 00000046 F85F 0048       LDR              r0, GPIOA   ; load port A base
+   72 0000004A F85F 1030       LDR              r1, PORTAOUTSET
+   73 0000004E F85F 2030       LDR              r2, PORTAINSET
+   74 00000052 F000 F832       BL               GPIO_init
+   75 00000056         
+   76 00000056         ; turn off LEDs
+   77 00000056 F04F 010C       MOV              r1, #0x0C
+   78 0000005A F8C0 13FC       STR              r1, [r0, #GPIODATA]
+   79 0000005E         
+   80 0000005E         ; init GPIOB
+   81 0000005E F85F 005C       LDR              r0, GPIOB
+   82 00000062 F85F 1040       LDR              r1, PORTBOUTSET
+   83 00000066 F85F 2040       LDR              r2, PORTBINSET
+   84 0000006A F000 F826       BL               GPIO_init
+   85 0000006E         
+   86 0000006E F04F 01FF       MOV              r1, #0xFF
+   87 00000072 F8C0 13FC       STR              r1, [r0, #GPIODATA]
+   88 00000076         
+   89 00000076         ; init GPIOF
+   90 00000076         ; TI felt it wise to lock
+   91 00000076         ; port F... unlock it
+   92 00000076 F85F 0064       LDR              r0, GPIOF
+   93 0000007A 493A            LDR              r1, =0x4C4F434B
+   94 0000007C F8C0 1520       STR              r1, [r0, #GPIOLOCK]
+   95 00000080         
+   96 00000080         ; enable commit to all pins
+   97 00000080 F04F 01FF       MOV              r1, #0xFF
+   98 00000084 F8C0 1524       STR              r1, [r0, #GPIOCR]
+   99 00000088         
+  100 00000088         ;back to the good stuff: 
+  101 00000088 F85F 1060       LDR              r1, PORTFOUTSET
+  102 0000008C F85F 2060       LDR              r2, PORTFINSET
+  103 00000090 F000 F813       BL               GPIO_init
+  104 00000094 F8C0 3510       STR              r3, [r0, #GPIOPUR] ; enable onb
+                                                            oard LED pull-up
+  105 00000098         
+  106 00000098 F240 0102 
+              F2C0 0100        MOV32            r1, #0x02   ; turn on onboard L
+                                                            ED
+  107 000000A0 F8C0 13FC       STR              r1, [r0, #0x3FC]
+  108 000000A4         
+  109 000000A4         ; setup complete, continue with application
+  110 000000A4 F04F 0400       MOV              r4, #0x00
+  111 000000A8 F44F 05F4       MOV              r5, #0x7A0000
+  112 000000AC F505 5590       ADD              r5, #0x001200
+  113 000000B0 F04F 0100       MOV              r1, #0x00
+  114 000000B4 F44F 6280       MOV              r2, #0x400
+  115 000000B8 E00C            B                main
+  116 000000BA         
+  117 000000BA         GPIO_init                            ; r0 stores base ad
+                                                            dress, r1 stores ou
+                                                            t val, r2 stores in
+                                                             val, r3 will store
+                                                             the or of the two
+  118 000000BA EA42 0301       ORR              r3, r2, r1  ; store active pins
+                                                            
+  119 000000BE F8C0 1400       STR              r1, [r0, #GPIODIR] 
+                                                            ; set directions
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  120 000000C2 F8C0 3500       STR              r3, [r0, #GPIODR2R] 
+                                                            ; set power (8mA)
+  121 000000C6 F8C0 150C       STR              r1, [r0, #GPIOODR] ; set output
+                                                            s open drain
+  122 000000CA F8C0 2510       STR              r2, [r0, #GPIOPUR] ; set inputs
+                                                             to pull ups
+  123 000000CE F8C0 351C       STR              r3, [r0, #GPIODEN] 
+                                                            ; enable pins
+  124 000000D2 4770            BX               lr
+  125 000000D4         
+  126 000000D4         ; let SW1=Start, SW2=Stop, EXT_SWITCH=RST
+  127 000000D4         ; r0=addresses, r1=count, r2=RST_VAL, r3=tmp, r4=delayCo
+                       unt, r5=DELAY_MAX, r6=another tmp
+  128 000000D4         main
+  129 000000D4         ; check Stop (port F0)
+  130 000000D4 F85F 00C4       LDR              r0, GPIOF
+  131 000000D8 F8D0 33FC       LDR              r3, [r0, #GPIODATA]
+  132 000000DC F003 0301       AND              r3, r3, #0x01 ; and off the LED
+                                                             and SW1 data
+  133 000000E0 2B01            CMP              r3, #0x01
+  134 000000E2 D10C            BNE              stopLoop
+  135 000000E4         
+  136 000000E4         ; check reset (port A7)
+  137 000000E4 F85F 00E8       LDR              r0, GPIOA
+  138 000000E8 F8D0 33FC       LDR              r3, [r0, #GPIODATA]
+  139 000000EC F003 0380       AND              r3, r3, #0x80 ; and off MSb of 
+                                                            LEDs
+  140 000000F0 2B80            CMP              r3, #0x80
+  141 000000F2 D111            BNE              resetCount
+  142 000000F4         
+  143 000000F4         ; check delay done
+  144 000000F4 42AC            CMP              r4, r5
+  145 000000F6 D212            BHS              incrementCount
+  146 000000F8         
+  147 000000F8         ; if this has been reached, increment delay
+  148 000000F8 F104 0410       ADD              r4, #16
+  149 000000FC         
+  150 000000FC E7EA            B                main
+  151 000000FE         
+  152 000000FE         stopLoop
+  153 000000FE         ; wait for button to be released
+  154 000000FE F8D0 33FC       LDR              r3, [r0, #GPIODATA]
+  155 00000102 F003 0301       AND              r3, r3, #0x01
+  156 00000106 2B01            CMP              r3, #0x01
+  157 00000108 D1F9            BNE              stopLoop
+  158 0000010A         
+  159 0000010A         ; button released, check for start (F4=0)
+  160 0000010A F8D0 33FC       LDR              r3, [r0, #GPIODATA]
+  161 0000010E F003 0310       AND              r3, r3, #0x10
+  162 00000112 2B10            CMP              r3, #0x10
+  163 00000114 D0F3            BEQ              stopLoop
+  164 00000116         
+  165 00000116 E7DD            B                main
+  166 00000118         
+  167 00000118         
+  168 00000118         resetCount
+  169 00000118 F04F 0100       MOV              r1, #0x00
+  170 0000011C E7DA            B                main
+  171 0000011E         
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  172 0000011E         incrementCount
+  173 0000011E F101 0101       ADD              r1, #0x01   ; increment count
+  174 00000122 F04F 0400       MOV              r4, #0x00   ; reset delay
+  175 00000126         
+  176 00000126         ; update LEDs
+  177 00000126         ; Bit 1 will correspond to LED 1 on the bar.
+  178 00000126 F85F 0124       LDR              r0, GPIOB
+  179 0000012A EA6F 0301       MVN              r3, r1      ; not-move count (L
+                                                            EDs are active low)
+                                                            
+  180 0000012E F003 06FF       AND              r6, r3, #0xFF ; only writing bo
+                                                            tom 8 bits here
+  181 00000132 F8C0 63FC       STR              r6, [r0, #GPIODATA]
+  182 00000136         
+  183 00000136 F85F 0138       LDR              r0, GPIOA
+  184 0000013A F403 7640       AND              r6, r3, #0x300 ; only writing t
+                                                            op 2 bits
+  185 0000013E EA4F 1696       LSR              r6, r6, #0x06 ; shift MSbs into
+                                                             position
+  186 00000142 F8C0 63FC       STR              r6, [r0, #GPIODATA]
+  187 00000146         
+  188 00000146         ; toggle LED
+  189 00000146 F85F 0134       LDR              r0, GPIOF   ; read
+  190 0000014A F8D0 33FC       LDR              r3, [r0, #0x3FC]
+  191 0000014E F003 0302       AND              r3, r3, #0x02 ; modify
+  192 00000152 EA6F 0603       MVN              r6, r3
+  193 00000156 F8C0 63FC       STR              r6, [r0, #0x3FC]
+  194 0000015A         
+  195 0000015A         ; check count done
+  196 0000015A F5B1 6F80       CMP              r1, #0x400  ; 2^11
+  197 0000015E D2DB            BHS              resetCount
+  198 00000160         
+  199 00000160 E7B8            B                main
+  200 00000162         
+  201 00000162 00 00           ALIGN
+  202 00000164                 END
+              4C4F434B 
+Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend=.\mai
+n.d -o.\main.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM
+\Inc\TI\TM4C123 --predefine="__EVAL SETA 1" --list=.\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 18 in file main.s
+   Uses
+      None
+Comment: DATA unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 20 in file main.s
+   Uses
+      None
+Comment: .text unused
+CLKSET 00000018
+
+Symbol: CLKSET
+   Definitions
+      At line 51 in file main.s
+   Uses
+      At line 67 in file main.s
+Comment: CLKSET used once
+GPIOA 00000000
+
+Symbol: GPIOA
+   Definitions
+      At line 43 in file main.s
+   Uses
+      At line 71 in file main.s
+      At line 137 in file main.s
+      At line 183 in file main.s
+
+GPIOB 00000004
+
+Symbol: GPIOB
+   Definitions
+      At line 44 in file main.s
+   Uses
+      At line 81 in file main.s
+      At line 178 in file main.s
+
+GPIOC 00000008
+
+Symbol: GPIOC
+   Definitions
+      At line 45 in file main.s
+   Uses
+      None
+Comment: GPIOC unused
+GPIOD 0000000C
+
+Symbol: GPIOD
+   Definitions
+      At line 46 in file main.s
+   Uses
+      None
+Comment: GPIOD unused
+GPIOE 00000010
+
+Symbol: GPIOE
+   Definitions
+      At line 47 in file main.s
+   Uses
+      None
+Comment: GPIOE unused
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+GPIOF 00000014
+
+Symbol: GPIOF
+   Definitions
+      At line 48 in file main.s
+   Uses
+      At line 92 in file main.s
+      At line 130 in file main.s
+      At line 189 in file main.s
+
+GPIO_init 000000BA
+
+Symbol: GPIO_init
+   Definitions
+      At line 117 in file main.s
+   Uses
+      At line 74 in file main.s
+      At line 84 in file main.s
+      At line 103 in file main.s
+
+PORTAINSET 00000020
+
+Symbol: PORTAINSET
+   Definitions
+      At line 53 in file main.s
+   Uses
+      At line 73 in file main.s
+Comment: PORTAINSET used once
+PORTAOUTSET 0000001C
+
+Symbol: PORTAOUTSET
+   Definitions
+      At line 52 in file main.s
+   Uses
+      At line 72 in file main.s
+Comment: PORTAOUTSET used once
+PORTBINSET 00000028
+
+Symbol: PORTBINSET
+   Definitions
+      At line 55 in file main.s
+   Uses
+      At line 83 in file main.s
+Comment: PORTBINSET used once
+PORTBOUTSET 00000024
+
+Symbol: PORTBOUTSET
+   Definitions
+      At line 54 in file main.s
+   Uses
+      At line 82 in file main.s
+Comment: PORTBOUTSET used once
+PORTFINSET 00000030
+
+Symbol: PORTFINSET
+   Definitions
+      At line 57 in file main.s
+   Uses
+      At line 102 in file main.s
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+Comment: PORTFINSET used once
+PORTFOUTSET 0000002C
+
+Symbol: PORTFOUTSET
+   Definitions
+      At line 56 in file main.s
+   Uses
+      At line 101 in file main.s
+Comment: PORTFOUTSET used once
+RCGCGPIO 00000034
+
+Symbol: RCGCGPIO
+   Definitions
+      At line 59 in file main.s
+   Uses
+      At line 66 in file main.s
+Comment: RCGCGPIO used once
+SETUP 00000038
+
+Symbol: SETUP
+   Definitions
+      At line 61 in file main.s
+   Uses
+      None
+Comment: SETUP unused
+Start 0000003C
+
+Symbol: Start
+   Definitions
+      At line 63 in file main.s
+   Uses
+      At line 21 in file main.s
+Comment: Start used once
+incrementCount 0000011E
+
+Symbol: incrementCount
+   Definitions
+      At line 172 in file main.s
+   Uses
+      At line 145 in file main.s
+Comment: incrementCount used once
+main 000000D4
+
+Symbol: main
+   Definitions
+      At line 128 in file main.s
+   Uses
+      At line 115 in file main.s
+      At line 150 in file main.s
+      At line 165 in file main.s
+      At line 170 in file main.s
+      At line 199 in file main.s
+
+resetCount 00000118
+
+Symbol: resetCount
+   Definitions
+      At line 168 in file main.s
+   Uses
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 141 in file main.s
+      At line 197 in file main.s
+
+stopLoop 000000FE
+
+Symbol: stopLoop
+   Definitions
+      At line 152 in file main.s
+   Uses
+      At line 134 in file main.s
+      At line 157 in file main.s
+      At line 163 in file main.s
+
+22 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+GPIOCR 00000524
+
+Symbol: GPIOCR
+   Definitions
+      At line 40 in file main.s
+   Uses
+      At line 98 in file main.s
+Comment: GPIOCR used once
+GPIODATA 000003FC
+
+Symbol: GPIODATA
+   Definitions
+      At line 24 in file main.s
+   Uses
+      At line 78 in file main.s
+      At line 87 in file main.s
+      At line 131 in file main.s
+      At line 138 in file main.s
+      At line 154 in file main.s
+      At line 160 in file main.s
+      At line 181 in file main.s
+      At line 186 in file main.s
+
+GPIODEN 0000051C
+
+Symbol: GPIODEN
+   Definitions
+      At line 38 in file main.s
+   Uses
+      At line 123 in file main.s
+Comment: GPIODEN used once
+GPIODIR 00000400
+
+Symbol: GPIODIR
+   Definitions
+      At line 25 in file main.s
+   Uses
+      At line 119 in file main.s
+Comment: GPIODIR used once
+GPIODR2R 00000500
+
+Symbol: GPIODR2R
+   Definitions
+      At line 32 in file main.s
+   Uses
+      At line 120 in file main.s
+Comment: GPIODR2R used once
+GPIODR4R 00000504
+
+Symbol: GPIODR4R
+   Definitions
+      At line 33 in file main.s
+   Uses
+      None
+Comment: GPIODR4R unused
+GPIODR8R 00000508
+
+Symbol: GPIODR8R
+   Definitions
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Absolute symbols
+
+      At line 34 in file main.s
+   Uses
+      None
+Comment: GPIODR8R unused
+GPIOIBE 00000408
+
+Symbol: GPIOIBE
+   Definitions
+      At line 27 in file main.s
+   Uses
+      None
+Comment: GPIOIBE unused
+GPIOIEV 0000040C
+
+Symbol: GPIOIEV
+   Definitions
+      At line 28 in file main.s
+   Uses
+      None
+Comment: GPIOIEV unused
+GPIOIM 00000410
+
+Symbol: GPIOIM
+   Definitions
+      At line 29 in file main.s
+   Uses
+      None
+Comment: GPIOIM unused
+GPIOIS 00000404
+
+Symbol: GPIOIS
+   Definitions
+      At line 26 in file main.s
+   Uses
+      None
+Comment: GPIOIS unused
+GPIOLOCK 00000520
+
+Symbol: GPIOLOCK
+   Definitions
+      At line 39 in file main.s
+   Uses
+      At line 94 in file main.s
+Comment: GPIOLOCK used once
+GPIOMIS 00000418
+
+Symbol: GPIOMIS
+   Definitions
+      At line 31 in file main.s
+   Uses
+      None
+Comment: GPIOMIS unused
+GPIOODR 0000050C
+
+Symbol: GPIOODR
+   Definitions
+      At line 35 in file main.s
+   Uses
+      At line 121 in file main.s
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Absolute symbols
+
+Comment: GPIOODR used once
+GPIOPDR 00000514
+
+Symbol: GPIOPDR
+   Definitions
+      At line 37 in file main.s
+   Uses
+      None
+Comment: GPIOPDR unused
+GPIOPUR 00000510
+
+Symbol: GPIOPUR
+   Definitions
+      At line 36 in file main.s
+   Uses
+      At line 104 in file main.s
+      At line 122 in file main.s
+
+GPIORIS 00000414
+
+Symbol: GPIORIS
+   Definitions
+      At line 30 in file main.s
+   Uses
+      None
+Comment: GPIORIS unused
+17 symbols
+374 symbols in table

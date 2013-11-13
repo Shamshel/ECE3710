@@ -1,0 +1,663 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; LAB3_UART.s
+    2 00000000         ;
+    3 00000000         ;
+    4 00000000         
+    5 00000000                 THUMB
+    6 00000000                 AREA             DATA, ALIGN=2
+    7 00000000                 ALIGN
+    8 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+    9 00000000                 EXPORT           Start
+   10 00000000         
+   11 00000000 400FE104 
+                       RCGC1   EQU              0x400FE104  ;RCGC1 CTL
+   12 00000000 400FE108 
+                       RCGC2   EQU              0x400FE108  ;RCGC2 address (to 
+                                                            activate GPIO)
+   13 00000000 4000E000 
+                       UART2   EQU              0x4000E000  ;base UART2 address
+                                                            
+   14 00000000 40007000 
+                       PORTD   EQU              0x40007000  ;base GPIO_PortD ad
+                                                            dress
+   15 00000000 40025000 
+                       PORTF   EQU              0x40025000  ;base GPIO_PortF ad
+                                                            dress
+   16 00000000 40030000 
+                       TIMER0  EQU              0x40030000  ;Timer0 base for ra
+                                                            ndom timer
+   17 00000000         
+   18 00000000 59 6F 75 
+              20 61 72 
+              65 20 44 
+              4F 4F 4D 
+              45 44 21 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20    message DCB              "You are DOOMED!               
+           "
+   19 00000029 43 6F 6E 
+              63 65 6E 
+              74 72 61 
+              74 65 2C 
+              20 79 6F 
+              75 20 66 
+              6F 6F 6C 
+              21 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Concentrate, you fool!        
+           "
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   20 00000052 4E 6F 70 
+              65 2E 2E 
+              2E 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Nope...                       
+           "
+   21 0000007B 57 68 61 
+              74 20 61 
+              20 72 75 
+              62 62 69 
+              73 68 20 
+              71 75 65 
+              73 74 69 
+              6F 6E 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "What a rubbish question       
+           "
+   22 000000A4 4F 6E 6C 
+              79 20 69 
+              6E 20 79 
+              6F 75 72 
+              20 64 72 
+              65 61 6D 
+              73 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Only in your dreams           
+           "
+   23 000000CD 59 65 73 
+              2C 20 6E 
+              6F 77 20 
+              6C 65 61 
+              76 65 20 
+              6D 65 20 
+              61 6C 6F 
+              6E 65 21 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Yes, now leave me alone!      
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+           "
+   24 000000F6 48 65 68 
+              2C 20 79 
+              6F 75 20 
+              77 69 73 
+              68 2E 2E 
+              2E 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Heh, you wish...              
+           "
+   25 0000011F 4F 68 20 
+              79 65 61 
+              68 20 74 
+              68 61 74 
+              20 77 69 
+              6C 6C 20 
+              68 61 70 
+              70 65 6E 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Oh yeah that will happen      
+           "
+   26 00000148 53 74 6F 
+              70 20 62 
+              6F 74 68 
+              65 72 69 
+              6E 67 20 
+              6D 65 21 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Stop bothering me!            
+           "
+   27 00000171 4E 6F 74 
+              20 69 66 
+              20 79 6F 
+              75 20 77 
+              65 72 65 
+              20 74 68 
+              65 20 6C 
+              61 73 74 
+              20 70 65 
+              72 73 6F 
+              6E 20 6F 
+              6E 20 65 
+              61 72 74 
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+              68 21            DCB              "Not if you were the last perso
+n on earth!"
+   28 0000019A 53 75 63 
+              6B 20 69 
+              74 20 75 
+              70 2C 20 
+              70 72 69 
+              6E 63 65 
+              73 73 21 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Suck it up, princess!         
+           "
+   29 000001C3 43 72 79 
+              20 6D 65 
+              20 61 20 
+              72 69 76 
+              65 72 2E 
+              20 54 68 
+              65 6E 20 
+              64 72 6F 
+              77 6E 2E 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20 20 
+              20 20            DCB              "Cry me a river. Then drown.   
+           "
+   30 000001EC         ;DCB "No body likes you. No one.               "
+   31 000001EC         ;DCB "When you were born, your mother cried!   "
+   32 000001EC         ;DCB "No. Do the world a favor and die. Slowly."
+   33 000001EC         ;DCB "I don't know... Go ask Gerdes.           "
+   34 000001EC         ;DCB "When pigs fly and unicorns sing.         "
+   35 000001EC         ;DCB "Your face!                               "
+   36 000001EC         ;DCB "Your mom...                              "
+   37 000001EC         
+   38 000001EC         Start
+   39 000001EC         ;1. enable the clock for UART2 in RCGC1 (bit 2)
+   40 000001EC         ;Enable RCGC1 for UART2:
+   41 000001EC 4946            LDR              R1, =RCGC1
+   42 000001EE F240 0004 
+              F2C0 0001        MOV32            R0, #0x10004 ;bit 2 is set for 
+                                                            UART2
+   43 000001F6 6008            STR              R0, [R1]
+   44 000001F8 BF00            nop
+   45 000001FA BF00            nop
+   46 000001FC         ;2. enable RCGC2 for port D (and port F for the push but
+                       ton)
+   47 000001FC         ;Enable RCGC2 for PortD:
+   48 000001FC 4943            LDR              R1, =RCGC2
+   49 000001FE F04F 0028       MOV              R0, #0x28   ;0b00101000
+   50 00000202 6008            STR              R0, [R1]
+   51 00000204 BF00            nop
+   52 00000206 BF00            nop
+   53 00000208         ;3. Configure Port D alt. funct. and enable pins (P6 is 
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+                       Rx, P7 is Tx):
+   54 00000208         ;a. enable alternate functionality for PD6 and PD7
+   55 00000208 4941            LDR              R1, =PORTD
+   56 0000020A         ;b. Unlock pin 7
+   57 0000020A F244 304B 
+              F6C4 404F        MOV32            R0, #0x4C4F434B
+   58 00000212 F8C1 0520       STR              R0, [R1,#0x520] ;offset #0x520 
+                                                            is the LOCK registe
+                                                            r
+   59 00000216         ;c. Commit the unlock
+   60 00000216 F04F 00FF       MOV              R0, #0xFF
+   61 0000021A F8C1 0524       STR              R0, [R1,#0x524] ;offset #0x524 
+                                                            is the CR register
+   62 0000021E         ;d. AFSEL on for P6 & P7
+   63 0000021E F04F 00C0       MOV              R0, #0xC0   ;0b11000000
+   64 00000222 F8C1 0420       STR              R0, [R1,#0x420] ;AFSEL_R
+   65 00000226         ;e. configure alternate functionality
+   66 00000226 F240 0000 
+              F2C1 1000        MOV32            R0, #0x11000000 ;pins 6 and 7 a
+                                                            re UART2 Rx and Tx 
+                                                            respectively
+   67 0000022E F8C1 052C       STR              R0, [R1,#0x52C] ;offset 0x520 i
+                                                            s the GPIOPCTL - sp
+                                                            ecifies which alt. 
+                                                            func. you want to u
+                                                            se. See Table 23-5 
+                                                            in the data sheet
+   68 00000232         ;f. enable Port D pins (P6 & P7)
+   69 00000232 F04F 00C0       MOV              R0, #0xC0
+   70 00000236 F8C1 051C       STR              R0, [R1,#0x51C]
+   71 0000023A         ;4. disable UART2 (CTL Register is offset #0x30 - bit 0 
+                       is UARTEN)
+   72 0000023A 4936            LDR              R1, =UART2
+   73 0000023C F04F 0000       MOV              R0, #0x0    ;turn off the UARTE
+                                                            N bit
+   74 00000240 6308            STR              R0, [R1,#0x30]
+   75 00000242         ;5. set the baud rate divisor: BRD = SysClk/(16*baudrate
+                       ) = 16MHz/(16*9600) = 104.1666667
+   76 00000242         ;I(nteger) = 104 = #0x68 (put in offset 0x24)
+   77 00000242 F04F 0068       MOV              R0, #0x68
+   78 00000246 6248            STR              R0, [R1,#0x24]
+   79 00000248         ;F(ractional) = (0.1666667*2^6+0.5) = 11 = #0xB (put in 
+                       offset 0x28)
+   80 00000248 F04F 000B       MOV              R0, #0xB
+   81 0000024C 6288            STR              R0, [R1,#0x28]
+   82 0000024E         ;6. Set serial parameters... (UARTLCTRH, line control, i
+                       s #0x2C)
+   83 0000024E         ;Parity on (CTRH, offset #0x2C, bit 2, 1 is on)
+   84 0000024E         ;word length to 8 (offset 0x2C, bits 5 and 6 need to be 
+                       1, so 0b01100000 or 0x60)
+   85 0000024E         ;FIFO buffers? (offset 0x2C, bit 4 - 0 disables buffers,
+                        1 enables buffers)
+   86 0000024E F04F 0060       MOV              R0, #0x60   ;0b0110.0010
+   87 00000252 62C8            STR              R0, [R1,#0x2C]
+   88 00000254         ;7. Enable Tx/Rx and UART(offset 0x30 - bits 9, 8, and 0
+                        set to 1, so #0x301)
+   89 00000254 F240 3001       MOV              R0, #0x301
+   90 00000258 6308            STR              R0, [R1,#0x30]
+   91 0000025A         ;Configure PortF P4 to be our input button
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+   92 0000025A 492F            LDR              R1, =PORTF
+   93 0000025C         ;Enable DIR (offset 0x400)
+   94 0000025C F04F 0000       MOV              R0, #0x0
+   95 00000260 F8C1 0400       STR              R0, [R1,#0x400]
+   96 00000264         ;Turn off AFSEL (offset 0x420)
+   97 00000264 F04F 0000       MOV              R0, #0x0
+   98 00000268 F8C1 0420       STR              R0, [R1,#0x420]
+   99 0000026C         ;Pull-up config (offset 0x510)
+  100 0000026C F04F 0010       MOV              R0, #0x10
+  101 00000270 F8C1 0510       STR              R0, [R1,#0x510]
+  102 00000274         ;Enable pin 4 (offset 0x51C)
+  103 00000274 F8C1 051C       STR              R0, [R1,#0x51C]
+  104 00000278         ;Configure TIMER0:
+  105 00000278 4928            LDR              R1, =TIMER0
+  106 0000027A         ;Disable timer (TnEN should be cleared in GPTMCTL regist
+                       er, offset 0x00C)
+  107 0000027A F04F 0000       MOV              R0, #0x0
+  108 0000027E 60C8            STR              R0, [R1, #0xC] ;store a 0 into 
+                                                            the CTL register to
+                                                             disable TIMER0
+  109 00000280         ;Cofigure the clock to 32-bit clock (CFG register is off
+                       set 0x0)
+  110 00000280 F04F 0000       MOV              R0, #0x0    ;0x0 will configure
+                                                             as 32-bit
+  111 00000284 6008            STR              R0, [R1, #0x0] ;offset 0x0 is t
+                                                            he CFG register
+  112 00000286         ;Configure the clock as a period timer (TAMR is offset 0
+                       x4
+  113 00000286 F04F 0002       MOV              R0, #0x2    ;0x2 will configure
+                                                             the timer as perio
+                                                            dic
+  114 0000028A 6048            STR              R0, [R1, #0x4] ;offset 0x4 is t
+                                                            he TAMR register
+  115 0000028C         ;load in the start value into TAILR (offset 0x28)
+  116 0000028C F04F 000B       MOV              R0, #0xB    ;This is the number
+                                                             of messages we hav
+                                                            e in our 'Spiteful 
+                                                            8-ball'
+  117 00000290 6288            STR              R0, [R1, #0x28]
+  118 00000292         ;Enable clock and start counting (by setting the TAEN bi
+                       t in CTL - offset 0xC):
+  119 00000292 F04F 0001       MOV              R0, #0x1    ;just enable the cl
+                                                            ock
+  120 00000296 60C8            STR              R0, [R1, #0xC]
+  121 00000298         ;to read the current value of GPTM TIMER0 TimerA, check 
+                       the TAR register (offset 0x48)
+  122 00000298         
+  123 00000298         resetLoop
+  124 00000298         ;send carriage return and line feed via UART
+  125 00000298 491E            LDR              R1, =UART2
+  126 0000029A F04F 000A       MOV              R0, #0xA    ;ASCII for 'New Lin
+                                                            e, or Line Feed'
+  127 0000029E 7008            STRB             R0, [R1,#0x0]
+  128 000002A0 F000 F82C       BL               wait4emptyTx ;wait for characte
+                                                            r to transmit
+  129 000002A4         ;send it
+  130 000002A4 491B            LDR              R1, =UART2
+  131 000002A6 F04F 000D       MOV              R0, #0xD    ;ASCII for 'Carriag
+                                                            e Return'
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  132 000002AA 7008            STRB             R0, [R1,#0x0] 
+                                                            ;offset 0x0 is data
+                                                            
+  133 000002AC F000 F826       BL               wait4emptyTx ;wait for characte
+                                                            r to transmit
+  134 000002B0         wait4input
+  135 000002B0 E013            B                sendMessage
+  136 000002B2         ;check button
+  137 000002B2 4919            LDR              R1, =PORTF
+  138 000002B4 F8D1 03FC       LDR              R0, [R1,#0x3FC] ;load in button
+                                                             data
+  139 000002B8 F010 0010       ANDS             R0, #0x10   ;check the button (
+                                                            PF.4)
+  140 000002BC D006            BEQ              buttonRelease
+  141 000002BE         ;check for input in UART
+  142 000002BE 4915            LDR              R1, =UART2
+  143 000002C0 6988            LDR              R0, [R1, #0x18] ;offset #0x018 
+                                                            bit 6 is the RxFF b
+                                                            it
+  144 000002C2 780A            LDRB             R2, [R1, #0x0] ;load in the dat
+                                                            a to clear RxFF bit
+                                                            
+  145 000002C4         ;STR R2, [R1,#0x0]
+  146 000002C4         ;BL wait4emptyTx
+  147 000002C4 F010 0040       ANDS             R0, #0x40
+  148 000002C8 D107            BNE              sendMessage
+  149 000002CA         ;if neither is pressed, B wait4input
+  150 000002CA E7F1            B                wait4input
+  151 000002CC         
+  152 000002CC         buttonRelease
+  153 000002CC 4912            LDR              R1, =PORTF
+  154 000002CE F8D1 03FC       LDR              R0, [R1,#0x3FC] ;load in button
+                                                             data
+  155 000002D2 F010 0010       ANDS             R0, #0x10   ;check the button (
+                                                            PF.4)
+  156 000002D6 D0F9            BEQ              buttonRelease
+  157 000002D8 E7FF            B                sendMessage
+  158 000002DA         
+  159 000002DA         sendMessage
+  160 000002DA         ;choose response
+  161 000002DA 4910            LDR              R1, =TIMER0
+  162 000002DC 6D08            LDR              R0, [R1,#0x50] 
+                                                            ;load Timer0 data
+  163 000002DE F04F 0629       MOV              R6, #41     ;(each message is 4
+                                                            1 bytes long)
+  164 000002E2 FB00 F706       MUL              R7, R0, R6  ;R1 = message numbe
+                                                            r * 41 = message of
+                                                            fset
+  165 000002E6         ;send response via UART
+  166 000002E6         sendChar
+  167 000002E6 480E            LDR              R0, =message
+  168 000002E8 5DC1            LDRB             R1, [R0,R7] ;R1 = current char
+  169 000002EA F107 0701       ADD              R7, #1      ;incrment message m
+                                                            emory offset for ne
+                                                            xt time through the
+                                                             loop
+  170 000002EE 4809            LDR              R0, =UART2
+  171 000002F0 7001            STRB             R1, [R0,#0x0]
+  172 000002F2 F000 F803       BL               wait4emptyTx
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+  173 000002F6         ;check to see if the whole message has been sent
+  174 000002F6 3E01            SUBS             R6, #1
+  175 000002F8 D1F5            BNE              sendChar    ;if the solution is
+                                                             0, z=1, don't loop
+                                                             back
+  176 000002FA E7CD            B                resetLoop
+  177 000002FC         
+  178 000002FC         wait4emptyTx
+  179 000002FC         ;check TxFE
+  180 000002FC 4905            LDR              R1, =UART2
+  181 000002FE 6988            LDR              R0, [R1, #0x18]
+  182 00000300 F010 0080       ANDS             R0, #0x80   ;check the TxFE bit
+                                                            , bit 7
+  183 00000304 D0FA            BEQ              wait4emptyTx ;if TxFE is 0, B w
+                                                            ait4emptyTx
+  184 00000306 4770            BX               LR
+  185 00000308         
+  186 00000308         
+  187 00000308         
+  188 00000308                 ALIGN
+  189 00000308                 END
+              400FE104 
+              400FE108 
+              40007000 
+              4000E000 
+              40025000 
+              40030000 
+              00000000 
+Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend=.\lab
+3_uart.d -o.\lab3_uart.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC
+:\Keil\ARM\Inc\TI\TM4C123 --predefine="__EVAL SETA 1" --list=.\lab3_uart.lst LA
+B3_UART.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 6 in file LAB3_UART.s
+   Uses
+      None
+Comment: DATA unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 8 in file LAB3_UART.s
+   Uses
+      None
+Comment: .text unused
+Start 000001EC
+
+Symbol: Start
+   Definitions
+      At line 38 in file LAB3_UART.s
+   Uses
+      At line 9 in file LAB3_UART.s
+Comment: Start used once
+buttonRelease 000002CC
+
+Symbol: buttonRelease
+   Definitions
+      At line 152 in file LAB3_UART.s
+   Uses
+      At line 140 in file LAB3_UART.s
+      At line 156 in file LAB3_UART.s
+
+message 00000000
+
+Symbol: message
+   Definitions
+      At line 18 in file LAB3_UART.s
+   Uses
+      At line 167 in file LAB3_UART.s
+Comment: message used once
+resetLoop 00000298
+
+Symbol: resetLoop
+   Definitions
+      At line 123 in file LAB3_UART.s
+   Uses
+      At line 176 in file LAB3_UART.s
+Comment: resetLoop used once
+sendChar 000002E6
+
+Symbol: sendChar
+   Definitions
+      At line 166 in file LAB3_UART.s
+   Uses
+      At line 175 in file LAB3_UART.s
+Comment: sendChar used once
+sendMessage 000002DA
+
+Symbol: sendMessage
+   Definitions
+      At line 159 in file LAB3_UART.s
+   Uses
+      At line 135 in file LAB3_UART.s
+      At line 148 in file LAB3_UART.s
+      At line 157 in file LAB3_UART.s
+
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+wait4emptyTx 000002FC
+
+Symbol: wait4emptyTx
+   Definitions
+      At line 178 in file LAB3_UART.s
+   Uses
+      At line 128 in file LAB3_UART.s
+      At line 133 in file LAB3_UART.s
+      At line 172 in file LAB3_UART.s
+      At line 183 in file LAB3_UART.s
+
+wait4input 000002B0
+
+Symbol: wait4input
+   Definitions
+      At line 134 in file LAB3_UART.s
+   Uses
+      At line 150 in file LAB3_UART.s
+Comment: wait4input used once
+9 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+PORTD 40007000
+
+Symbol: PORTD
+   Definitions
+      At line 14 in file LAB3_UART.s
+   Uses
+      At line 55 in file LAB3_UART.s
+Comment: PORTD used once
+PORTF 40025000
+
+Symbol: PORTF
+   Definitions
+      At line 15 in file LAB3_UART.s
+   Uses
+      At line 92 in file LAB3_UART.s
+      At line 137 in file LAB3_UART.s
+      At line 153 in file LAB3_UART.s
+
+RCGC1 400FE104
+
+Symbol: RCGC1
+   Definitions
+      At line 11 in file LAB3_UART.s
+   Uses
+      At line 41 in file LAB3_UART.s
+Comment: RCGC1 used once
+RCGC2 400FE108
+
+Symbol: RCGC2
+   Definitions
+      At line 12 in file LAB3_UART.s
+   Uses
+      At line 48 in file LAB3_UART.s
+Comment: RCGC2 used once
+TIMER0 40030000
+
+Symbol: TIMER0
+   Definitions
+      At line 16 in file LAB3_UART.s
+   Uses
+      At line 105 in file LAB3_UART.s
+      At line 161 in file LAB3_UART.s
+
+UART2 4000E000
+
+Symbol: UART2
+   Definitions
+      At line 13 in file LAB3_UART.s
+   Uses
+      At line 72 in file LAB3_UART.s
+      At line 125 in file LAB3_UART.s
+      At line 130 in file LAB3_UART.s
+      At line 142 in file LAB3_UART.s
+      At line 170 in file LAB3_UART.s
+      At line 180 in file LAB3_UART.s
+
+6 symbols
+350 symbols in table
