@@ -1,0 +1,10 @@
+Dependencies for Project 'SimpleProject', Target 'SimpleProject': (DO NOT MODIFY !)
+F (.\Startup.s)(0x512662FC)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x5271B594)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+F (.\GPIO.c)(0x526C8D52)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\gpio.o --omf_browse .\gpio.crf --depend .\gpio.d)
+F (.\GPIO.h)(0x527311A9)()
+F (.\GPTM.h)(0x5271B5B5)()
+F (.\GPTM.c)(0x5271B5CF)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\gptm.o --omf_browse .\gptm.crf --depend .\gptm.d)
+F (.\SYSCTL.h)(0x5273129F)()
+F (.\SYSCTL.c)(0x5273130C)()
+F (.\regop.c)(0x527313F1)()

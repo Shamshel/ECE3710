@@ -1,0 +1,8 @@
+#
+#	Sources included here were written by Cody Herndon for USU ECE3710, Microcontrollers Hardware and Software
+#	course, unless noted otherwise.  Code is composed of a mixture of Assembly using the Thumb and Thumb-2 architecture,
+#	and C.
+#
+#	Labs and projects utilized a Tiva C Series microcontroller development platform from Texas Instruments unless noted otherwise.  Classroom examples
+#	are targeted at the LM3S1968 series microcontroller and tested using the Keil uVision 4 IDE.
+#

@@ -1,0 +1,27 @@
+Dependencies for Project 'SimpleProject', Target 'SimpleProject': (DO NOT MODIFY !)
+F (.\Startup.s)(0x527EF647)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x527EFEF1)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\GPIO.h)(0x527DC512)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\SSI.h)(0x527DCC46)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\SYSCTL.h)(0x527EFEC6)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\GPTM.h)(0x527EF754)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\NVIC.h)(0x527EF5C0)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)
+F (.\GPIO.c)(0x527DCBFB)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\gpio.o --omf_browse .\gpio.crf --depend .\gpio.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\GPIO.h)(0x527DC512)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)
+F (.\GPTM.c)(0x527F07E1)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\gptm.o --omf_browse .\gptm.crf --depend .\gptm.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\GPTM.h)(0x527EF754)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)
+F (.\regop.c)(0x527F0A42)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\regop.o --omf_browse .\regop.crf --depend .\regop.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)
+F (.\SYSCTL.c)(0x52730742)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\sysctl.o --omf_browse .\sysctl.crf --depend .\sysctl.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\SYSCTL.h)(0x527EFEC6)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)
+F (.\regop.h)(0x527F0A57)()
+F (.\SSI.c)(0x527DCFD0)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\ssi.o --omf_browse .\ssi.crf --depend .\ssi.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\SSI.h)(0x527DCC46)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)
+F (.\NVIC.c)(0x527EF5BA)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\nvic.o --omf_browse .\nvic.crf --depend .\nvic.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\NVIC.h)(0x527EF5C0)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-1\regop.h)(0x527F0A57)

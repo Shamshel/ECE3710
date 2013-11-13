@@ -1,0 +1,103 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; main.s
+    2 00000000         ; Runs on LM3S1968
+    3 00000000         ; Project files adapted from:
+    4 00000000         ; Daniel Valvano
+    5 00000000         ; May 4, 2012
+    6 00000000         
+    7 00000000         ;  This example accompanies the book
+    8 00000000         ;  "Embedded Systems: Introduction to the Arm Cortex M3"
+                       ,
+    9 00000000         ;  ISBN: 978-1469998749, Jonathan Valvano, copyright (c)
+                        2012
+   10 00000000         ;  Section 3.3.10, Program 3.12
+   11 00000000         ;
+   12 00000000         ;Copyright 2012 by Jonathan W. Valvano, valvano@mail.ute
+                       xas.edu
+   13 00000000         ;   You may use, edit, run or distribute this file
+   14 00000000         ;   as long as the above copyright notice remains
+   15 00000000         ;THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHET
+                       HER EXPRESS, IMPLIED
+   16 00000000         ;OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WA
+                       RRANTIES OF
+   17 00000000         ;MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AP
+                       PLY TO THIS SOFTWARE.
+   18 00000000         ;VALVANO SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR 
+                       SPECIAL, INCIDENTAL,
+   19 00000000         ;OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+   20 00000000         ;For more information about my classes, my research, and
+                        my books, see
+   21 00000000         ;http://users.ece.utexas.edu/~valvano/
+   22 00000000         
+   23 00000000         
+   24 00000000                 THUMB
+   25 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   26 00000000                 EXPORT           Start
+   27 00000000         Start
+   28 00000000 F04F 0000       MOV              r0, #0
+   29 00000004         
+   30 00000004 E7FF            B                Delay
+   31 00000006         
+   32 00000006         Delay
+   33 00000006 F100 0001       ADD              r0, #1
+   34 0000000A F5B0 1FC3       CMP              r0, #0x186000
+   35 0000000E DBFA            BLT              Delay
+   36 00000010 E7FF            B                Fin
+   37 00000012         
+   38 00000012         Fin
+   39 00000012 E7FE            B                Fin
+   40 00000014         
+   41 00000014         
+   42 00000014                 ALIGN
+   43 00000014                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\main.d
+ -o.\main.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\In
+c\Luminary --predefine="__EVAL SETA 1" --list=.\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 25 in file main.s
+   Uses
+      None
+Comment: .text unused
+Delay 00000006
+
+Symbol: Delay
+   Definitions
+      At line 32 in file main.s
+   Uses
+      At line 30 in file main.s
+      At line 35 in file main.s
+
+Fin 00000012
+
+Symbol: Fin
+   Definitions
+      At line 38 in file main.s
+   Uses
+      At line 36 in file main.s
+      At line 39 in file main.s
+
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 27 in file main.s
+   Uses
+      At line 26 in file main.s
+Comment: Start used once
+4 symbols
+335 symbols in table

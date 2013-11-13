@@ -1,0 +1,75 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; main.s
+    2 00000000         ; Runs on LM3S1968
+    3 00000000         ; Project files adapted from:
+    4 00000000         ; Daniel Valvano
+    5 00000000         ; May 4, 2012
+    6 00000000         
+    7 00000000         ;  This example accompanies the book
+    8 00000000         ;  "Embedded Systems: Introduction to the Arm Cortex M3"
+                       ,
+    9 00000000         ;  ISBN: 978-1469998749, Jonathan Valvano, copyright (c)
+                        2012
+   10 00000000         ;  Section 3.3.10, Program 3.12
+   11 00000000         ;
+   12 00000000         ;Copyright 2012 by Jonathan W. Valvano, valvano@mail.ute
+                       xas.edu
+   13 00000000         ;   You may use, edit, run or distribute this file
+   14 00000000         ;   as long as the above copyright notice remains
+   15 00000000         ;THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHET
+                       HER EXPRESS, IMPLIED
+   16 00000000         ;OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WA
+                       RRANTIES OF
+   17 00000000         ;MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE AP
+                       PLY TO THIS SOFTWARE.
+   18 00000000         ;VALVANO SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR 
+                       SPECIAL, INCIDENTAL,
+   19 00000000         ;OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+   20 00000000         ;For more information about my classes, my research, and
+                        my books, see
+   21 00000000         ;http://users.ece.utexas.edu/~valvano/
+   22 00000000         
+   23 00000000         
+   24 00000000                 THUMB
+   25 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+   26 00000000                 EXPORT           Start
+   27 00000000         Start                                ;your code here
+   28 00000000 E7FE            B                Start       ;jump back to 'Star
+                                                            t'
+   29 00000002         
+   30 00000002 00 00           ALIGN
+   31 00000004                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=main.d -
+omain.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\Lu
+minary --list=main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 25 in file main.s
+   Uses
+      None
+Comment: .text unused
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 27 in file main.s
+   Uses
+      At line 26 in file main.s
+      At line 28 in file main.s
+
+2 symbols
+332 symbols in table

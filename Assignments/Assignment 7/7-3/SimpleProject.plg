@@ -1,0 +1,34 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 7\7-3\SimpleProject.uvproj
+Project File Date:  12/01/2018
+
+<h2>Output:</h2>
+Rebuild target 'SimpleProject'
+assembling Startup.s...
+assembling main.s...
+main.s(131): error: A1619E: Specified condition is not consistent with previous IT
+main.s(135): error: A1647E: Bad register name symbol, expected Integer register
+".\SimpleProject.axf" - 2 Errors, 0 Warning(s).
+Target not created
+Rebuild target 'SimpleProject'
+assembling Startup.s...
+assembling main.s...
+main.s(135): error: A1647E: Bad register name symbol, expected Integer register
+".\SimpleProject.axf" - 1 Errors, 0 Warning(s).
+Target not created
+Rebuild target 'SimpleProject'
+assembling Startup.s...
+assembling main.s...
+linking...
+Program Size: Code=556 RO-data=0 RW-data=0 ZI-data=1024  
+".\SimpleProject.axf" - 0 Errors, 0 Warning(s).
+Rebuild target 'SimpleProject'
+assembling Startup.s...
+assembling main.s...
+linking...
+Program Size: Code=560 RO-data=0 RW-data=0 ZI-data=1024  
+".\SimpleProject.axf" - 0 Errors, 0 Warning(s).

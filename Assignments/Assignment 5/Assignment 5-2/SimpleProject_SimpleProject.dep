@@ -1,0 +1,3 @@
+Dependencies for Project 'SimpleProject', Target 'SimpleProject': (DO NOT MODIFY !)
+F (.\Startup.s)(0x512662FC)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x525F69B1)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\main.o --omf_browse .\main.crf --depend .\main.d)

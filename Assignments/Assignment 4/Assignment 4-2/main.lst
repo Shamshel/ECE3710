@@ -1,0 +1,105 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000                 THUMB
+    3 00000000                 AREA             DATA, ALIGN=2
+    4 00000000                 ALIGN
+    5 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+    6 00000000                 EXPORT           Start
+    7 00000000         
+    8 00000000         ; r0 and r1 store source addresses, r2 stores destinatio
+                       n address
+    9 00000000         ; assume little endian (MSW is at address+12)
+   10 00000000         Start
+   11 00000000         ; MOV r0, #0x
+   12 00000000         ; clear carry bit (and r3)
+   13 00000000 F04F 0300       MOV              r3, #0x00
+   14 00000004 2B01            CMP              r3, #0x01
+   15 00000006 E7FF            B                ADD128
+   16 00000008         
+   17 00000008         ; r3 stores count
+   18 00000008         ADD128
+   19 00000008 58C4            LDR              r4, [r0, r3]
+   20 0000000A 58CD            LDR              r5, [r1, r3]
+   21 0000000C BF88            IT               HI
+   22 0000000E 3401            ADDHI            r4, #0x01
+   23 00000010         
+   24 00000010 EB04 0605       ADD              r6, r4, r5
+   25 00000014 50C6            STR              r6, [r0, r3]
+   26 00000016         
+   27 00000016 F103 0304       ADD              r3, #4
+   28 0000001A         
+   29 0000001A 2B0C            CMP              r3, #12
+   30 0000001C D100            BNE              Fin
+   31 0000001E         
+   32 0000001E E7F3            B                ADD128
+   33 00000020         
+   34 00000020         Fin
+   35 00000020 E7FE            B                Fin
+   36 00000022 00 00           ALIGN
+   37 00000024                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\main.d
+ -o.\main.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\In
+c\Luminary --predefine="__EVAL SETA 1" --list=.\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 3 in file main.s
+   Uses
+      None
+Comment: DATA unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 5 in file main.s
+   Uses
+      None
+Comment: .text unused
+ADD128 00000008
+
+Symbol: ADD128
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 15 in file main.s
+      At line 32 in file main.s
+
+Fin 00000020
+
+Symbol: Fin
+   Definitions
+      At line 34 in file main.s
+   Uses
+      At line 30 in file main.s
+      At line 35 in file main.s
+
+Start 00000000
+
+Symbol: Start
+   Definitions
+      At line 10 in file main.s
+   Uses
+      At line 6 in file main.s
+Comment: Start used once
+4 symbols
+336 symbols in table

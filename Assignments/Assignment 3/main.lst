@@ -1,0 +1,213 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         
+    3 00000000                 THUMB
+    4 00000000                 AREA             DATA, ALIGN=2
+    5 00000000                 ALIGN
+    6 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+    7 00000000                 EXPORT           Start
+    8 00000000         
+    9 00000000 40007000 
+                       GPIOD   DCD              0x40007000
+   10 00000004         
+   11 00000004 000003FC 
+                       GPIODATA
+                               EQU              0x3FC
+   12 00000004 00000400 
+                       GPIODIR EQU              0x400
+   13 00000004 00000500 
+                       GPIODR2R
+                               EQU              0x500
+   14 00000004 0000050C 
+                       GPIOODR EQU              0x50C
+   15 00000004 00000510 
+                       GPIOPUR EQU              0x510
+   16 00000004 0000051C 
+                       GPIODEN EQU              0x51C
+   17 00000004         
+   18 00000004         Start
+   19 00000004         
+   20 00000004         ; init GPIOD
+   21 00000004 F85F 0008       LDR              r0, GPIOD
+   22 00000008 F04F 018F       MOV              r1, #0x8F
+   23 0000000C F04F 0270       MOV              r2, #0x70
+   24 00000010 F000 F80F       BL               GPIO_init
+   25 00000014         
+   26 00000014         ; load port d
+   27 00000014 F8D0 13FC       LDR              r1, [r0, #GPIODATA]
+   28 00000018         
+   29 00000018         ; mov mask
+   30 00000018 F04F 0281       MOV              r2, #0x81
+   31 0000001C         
+   32 0000001C         ; mask off bits 6:2
+   33 0000001C EA02 0401       AND              r4, r2, r1
+   34 00000020         
+   35 00000020         ; mov mask
+   36 00000020 F04F 0270       MOV              r2, #0x70
+   37 00000024         
+   38 00000024 EA02 0301       AND              r3, r2, r1
+   39 00000028         
+   40 00000028         ; add bits 7 and 0 back on
+   41 00000028 EB04 03D3       ADD              r3, r4, r3, LSR #3
+   42 0000002C         
+   43 0000002C         ; write to port d
+   44 0000002C F8C0 33FC       STR              r3, [r0, #GPIODATA]
+   45 00000030         
+   46 00000030         Fin
+   47 00000030 E7FE            B                Fin
+   48 00000032         
+   49 00000032         GPIO_init                            ; r0 stores base ad
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                                                            dress, r1 stores ou
+                                                            t val, r2 stores in
+                                                             val, r3 will store
+                                                             the or of the two
+   50 00000032 EA42 0301       ORR              r3, r2, r1  ; store active pins
+                                                            
+   51 00000036 F8C0 1400       STR              r1, [r0, #GPIODIR] 
+                                                            ; set directions
+   52 0000003A F8C0 3500       STR              r3, [r0, #GPIODR2R] 
+                                                            ; set power (8mA)
+   53 0000003E F8C0 150C       STR              r1, [r0, #GPIOODR] ; set output
+                                                            s open drain
+   54 00000042 F8C0 2510       STR              r2, [r0, #GPIOPUR] ; set inputs
+                                                             to pull ups
+   55 00000046 F8C0 351C       STR              r3, [r0, #GPIODEN] 
+                                                            ; enable pins
+   56 0000004A 4770            BX               lr
+   57 0000004C         
+   58 0000004C                 ALIGN
+   59 0000004C                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\main.d
+ -o.\main.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\In
+c\Luminary --predefine="__EVAL SETA 1" --list=.\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA 00000000
+
+Symbol: DATA
+   Definitions
+      At line 4 in file main.s
+   Uses
+      None
+Comment: DATA unused
+1 symbol
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 6 in file main.s
+   Uses
+      None
+Comment: .text unused
+Fin 00000030
+
+Symbol: Fin
+   Definitions
+      At line 46 in file main.s
+   Uses
+      At line 47 in file main.s
+Comment: Fin used once
+GPIOD 00000000
+
+Symbol: GPIOD
+   Definitions
+      At line 9 in file main.s
+   Uses
+      At line 21 in file main.s
+Comment: GPIOD used once
+GPIO_init 00000032
+
+Symbol: GPIO_init
+   Definitions
+      At line 49 in file main.s
+   Uses
+      At line 24 in file main.s
+Comment: GPIO_init used once
+Start 00000004
+
+Symbol: Start
+   Definitions
+      At line 18 in file main.s
+   Uses
+      At line 7 in file main.s
+Comment: Start used once
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+GPIODATA 000003FC
+
+Symbol: GPIODATA
+   Definitions
+      At line 11 in file main.s
+   Uses
+      At line 27 in file main.s
+      At line 44 in file main.s
+
+GPIODEN 0000051C
+
+Symbol: GPIODEN
+   Definitions
+      At line 16 in file main.s
+   Uses
+      At line 55 in file main.s
+Comment: GPIODEN used once
+GPIODIR 00000400
+
+Symbol: GPIODIR
+   Definitions
+      At line 12 in file main.s
+   Uses
+      At line 51 in file main.s
+Comment: GPIODIR used once
+GPIODR2R 00000500
+
+Symbol: GPIODR2R
+   Definitions
+      At line 13 in file main.s
+   Uses
+      At line 52 in file main.s
+Comment: GPIODR2R used once
+GPIOODR 0000050C
+
+Symbol: GPIOODR
+   Definitions
+      At line 14 in file main.s
+   Uses
+      At line 53 in file main.s
+Comment: GPIOODR used once
+GPIOPUR 00000510
+
+Symbol: GPIOPUR
+   Definitions
+      At line 15 in file main.s
+   Uses
+      At line 54 in file main.s
+Comment: GPIOPUR used once
+6 symbols
+343 symbols in table

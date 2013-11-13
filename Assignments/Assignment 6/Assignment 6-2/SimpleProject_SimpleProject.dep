@@ -1,0 +1,21 @@
+Dependencies for Project 'SimpleProject', Target 'SimpleProject': (DO NOT MODIFY !)
+F (.\Startup.s)(0x512662FC)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x52734F53)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\SYSCTL.h)(0x52734148)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\UART.h)(0x527346F6)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\GPIO.h)(0x52731B16)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\regop.h)(0x527323DA)
+F (.\GPIO.c)(0x52732929)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\gpio.o --omf_browse .\gpio.crf --depend .\gpio.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\GPIO.h)(0x52731B16)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\regop.h)(0x527323DA)
+F (.\regop.c)(0x527323F7)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\regop.o --omf_browse .\regop.crf --depend .\regop.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\regop.h)(0x527323DA)
+F (.\SYSCTL.c)(0x52731552)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\sysctl.o --omf_browse .\sysctl.crf --depend .\sysctl.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\SYSCTL.h)(0x52734148)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\regop.h)(0x527323DA)
+F (.\GPIO.h)(0x52731B16)()
+F (.\regop.h)(0x527323DA)()
+F (.\SYSCTL.h)(0x52734148)()
+F (.\UART.c)(0x52734977)(-c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\UART.h)(0x527346F6)
+I (C:\Users\cody\Documents\Keil\ECE 3710\Assignments\Assignment 6\Assignment 6-2\regop.h)(0x527323DA)
