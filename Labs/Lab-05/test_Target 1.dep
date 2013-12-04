@@ -1,0 +1,26 @@
+Dependencies for Project 'test', Target 'Target 1': (DO NOT MODIFY !)
+F (.\main.c)(0x5286C50C)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.3\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\gpio.h)(0x5284316A)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\util.h)(0x52852B2E)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\lcd.h)(0x5286B9EC)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\touchscreen.h)(0x52853B4C)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\ssi.h)(0x5284316B)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\adc.h)(0x5286A388)
+F (.\Startup.s)(0x528444F1)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.3\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\gpio.h)(0x5284316A)()
+F (.\gpio.c)(0x52843169)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.3\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\gpio.o --omf_browse .\gpio.crf --depend .\gpio.d)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\gpio.h)(0x5284316A)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\util.h)(0x52852B2E)
+F (.\util.c)(0x52854D48)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.3\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\util.o --omf_browse .\util.crf --depend .\util.d)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\util.h)(0x52852B2E)
+F (.\ssi.h)(0x5284316B)()
+F (.\ssi.c)(0x52869496)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.3\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\ssi.o --omf_browse .\ssi.crf --depend .\ssi.d)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\ssi.h)(0x5284316B)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\util.h)(0x52852B2E)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\gpio.h)(0x5284316A)
+F (.\lcd.h)(0x5286B9EC)()
+F (.\lcd.c)(0x5286C386)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.3\CMSIS\Include-I C:\Keil\ARM\Inc\TI\TM4C123-DTM4C123GH6PM-o .\lcd.o --omf_browse .\lcd.crf --depend .\lcd.d)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\lcd.h)(0x5286B9EC)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\gpio.h)(0x5284316A)
+I (C:\Users\david\Documents\hw\5\ECE3710\lab6\util.h)(0x52852B2E)
+F (.\adc.c)(0x5286B22A)()

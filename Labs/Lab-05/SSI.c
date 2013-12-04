@@ -1,39 +1,47 @@
-//SSI.c
+#include "ssi.h"
+#include "util.h"
+#include "gpio.h"
 
-#include "SSI.h"
-#include "regop.h"
-
-void ssi_enableClock(unsigned int mask)
+void ssi_enableClock(int _mask)
 {
-	*RCGCSSI = mask;
-	
+	util_writeMask((int*)RCGCSSI, _mask, 0xFF);
 }
 
-void ssi_config(unsigned int* ssi, unsigned int config_0, unsigned int config_1, unsigned int config_clock, unsigned int config_prescale)
+void ssi_config(int* _ssi, unsigned int _config_0, unsigned int _config_1, unsigned int _config_clock, unsigned int _config_prescale)
 {
+		//assume ports and clocks have been enabled and configured
+	
 	//disable SSI
-	writeReg(ssi, SSICR1, 0x00);
+	util_writeMask((_ssi+SSICR1/4), 0xFF, 0x00);
 	
 	//config clock
-	writeReg(ssi, SSICC, config_clock);
+	util_writeMask((_ssi+SSICC/4), 0xFF, _config_clock);
 	
 	//set SSICR0
-	writeReg(ssi, SSICR0, config_0);
+	util_writeMask((_ssi+SSICR0/4), 0xFFFF, _config_0);	
 	
 	//set prescaler
-	writeReg(ssi, SSICPSR, config_prescale);
+	//BR=SysClk/(CPSDVSR*(1+SCR))
+	//CPSDVSR=SysClk/(BR*(1+SCR))
+	util_writeMask((_ssi+SSICPSR/4), 0xFF, _config_prescale);
 	
 	//enable SSI/write config 1
-	writeReg(ssi, SSICR1, config_1|0x02);
+	util_writeMask((_ssi+SSICR1/4), 0xFF, _config_1|0x02);
 	
+	//enable AF on pins PF0:3
+	gpio_digitalEnable(GPIO_F, 0x0F);
+	gpio_alternateFunction(GPIO_F, 0x0F);
+	gpio_PCTL(GPIO_F, 0x2222);
 }
 
-unsigned short transferSSI(unsigned int* ssi, unsigned short data)
+unsigned short ssi_transfer(int* _ssi, unsigned short _data)
 {
-	writeReg(ssi, SSIDR, data);
-	
-	while((readReg(ssi, SSISR) & 0x10) != 0x10);
-	
-	return (unsigned short)readReg(ssi, SSIDR);
-	
+	util_writeMask((_ssi+SSIDR/4), 0xFFFF, _data);
+
+	//wait while the SSI Recieve Buffer is empty
+	while(util_readMask(_ssi+SSISR/4, 0x04) == 0x00);
+	//util_delayMS(1);
+
+	//return retrieved data
+	return (unsigned short)util_readMask(_ssi+SSIDR/4, 0xFFFF);
 }
